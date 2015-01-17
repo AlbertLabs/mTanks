@@ -17,13 +17,15 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 class TankLoader{
-      
-   /*
-    public Tank loadTank(){
 
+    public static Tank loadTank(String contents){
+        JavaFileObject file = getJavaFileObject(contents);
+        Iterable<? extends JavaFileObject> files = Arrays.asList(file);
+
+        compile(files);
+
+        return runIt();
     }
-    */
-
 
     /** where shall the compiled class be saved to (should exist already) */
     private static String classOutputFolder = "temp";
@@ -143,13 +145,7 @@ class TankLoader{
                         "}" +
                         "}");
 
-        JavaFileObject file = getJavaFileObject(contents.toString());
-        Iterable<? extends JavaFileObject> files = Arrays.asList(file);
-
-        //2.Compile your files by JavaCompiler
-        compile(files);
-
-        //3.Load your class by URLClassLoader, then instantiate the instance, and call method by reflection
-        Tank tank = runIt();
+        Tank tank = TankLoader.loadTank(contents.toString());
+        System.out.println(tank.getHealth());
     }
 }
