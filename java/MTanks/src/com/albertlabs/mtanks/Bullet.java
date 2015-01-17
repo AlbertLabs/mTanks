@@ -8,7 +8,7 @@ public class Bullet implements WorldObject {
 
 	private double xspeed;
 	private double yspeed;
-	private boolean alive = true;
+	private boolean safe = true;
 
 	public static final double BULLET_DISTANCE = 500;
 	private WorldObject parent;
@@ -16,9 +16,10 @@ public class Bullet implements WorldObject {
 
 	Bullet(double x, double y, double radius, double heading, WorldObject parent) {
 		body = new CircleBody(x, y, radius, heading);
-		xspeed = Math.asin(heading)*5;
-		yspeed = Math.acos(heading)*5;
+		xspeed = Math.acos(heading)*5;
+		yspeed = Math.asin(heading)*5;
 		this.parent = parent;
+		System.out.println(radius);
 	}
 
 	public List<PrintData> print() {
@@ -35,6 +36,9 @@ public class Bullet implements WorldObject {
 		if (distLeft <= 0) {
 			die();
 		}
+		
+		if(safe)
+			safe = GameSim.world.collidingWith(this).size() != 0;
 	}
 
 	public Body getBody() {
@@ -42,18 +46,13 @@ public class Bullet implements WorldObject {
 	}
 
 	public void collide(WorldObject o) {
-		if( o != parent)
+		if(!safe){
 			die();
-	}
-
-	public boolean alive() {
-		return alive;
+		}
 	}
 
 	public void die() {
-		System.out.println("DIE");
-		GameSim.world.remove(this);
-		alive = false;
+		GameSim.objectDeath(this);
 	}
 
 }

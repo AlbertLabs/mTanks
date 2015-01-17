@@ -11,5 +11,4 @@ public interface WorldObject {
 
 	void loop();
 	void die();
-	public boolean alive();
 }

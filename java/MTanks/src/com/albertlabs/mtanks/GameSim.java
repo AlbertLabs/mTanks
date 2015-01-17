@@ -7,9 +7,18 @@ import com.firebase.client.Firebase;
 
 public class GameSim {
 
-	static World world;
-	
+	 static World world;
 	static Firebase ref;
+static int lastSize = 0;
+	static public void objectDeath(WorldObject o){
+		dead.add(o);
+	}
+	
+	static public void objectCreate(WorldObject o){
+		world.add(o);
+	}
+	
+	private static ArrayList<WorldObject> dead = new ArrayList<WorldObject>();
 
 	//Parameters: gameURL, tankURL1, tankURL2, tankURL3...
 	public static void main(String[] args) {
@@ -33,6 +42,8 @@ public class GameSim {
 	/*	for(int i = 0; i < tankURLs.size(); i++){
 			world.add(TankLoader.loadTank(tankURLs.get(i)));
 		}*/
+		
+		
 		
 		world.add(new Tank(100, 100, 50, 50, 0));
 		world.add(new Tank(400, 100, 50, 50, 0));
@@ -67,24 +78,32 @@ public class GameSim {
 			for(WorldObject a: (ArrayList<WorldObject>)world.getList().clone()){
 				List<WorldObject> col = world.collidingWith(a);
 				for(WorldObject b : col){
+					if(a instanceof Tank)
+						System.out.println(a + " hit " + b);
 					a.collide(b);
 				}
 			}
 			
-			List <WorldObject> tempList = new ArrayList<WorldObject>();
+		/*	List <WorldObject> tempList = new ArrayList<WorldObject>();
 			for(WorldObject a: world.getList()){
 				if(a.alive()){
 					tempList.add(a);
 				}
 			}
-		/*	for(WorldObject a: tempList){
+			for(WorldObject a: tempList){
 				world.remove(a);
 			}*/
+			
+			for(WorldObject a : dead){
+				world.remove(a);
+			}
+			dead.clear();
 
 			List<PrintData> printData = new ArrayList<PrintData>();
-			for(WorldObject a: (ArrayList<WorldObject>)world.getList().clone()){
-				printData.addAll(a.print());
+			for(WorldObject d: (ArrayList<WorldObject>)world.getList().clone()){
+				printData.addAll(d.print());
 			}
+			int temp = printData.size();
 			//System.out.println("TEST");
 			for(int i = 0; i < printData.size(); i++){
 				
@@ -107,11 +126,14 @@ public class GameSim {
 				ref.child(Integer.toString(i)).child("health").setValue(printData.get(i).health);
 				ref.child(Integer.toString(i)).child("maxHealth").setValue(printData.get(i).maxHealth);
 				ref.child(Integer.toString(i)).child("image").setValue(printData.get(i).image);
+				
 			}
+			for(int i = printData.size(); i <= lastSize; i++)
+				ref.child(Integer.toString(i)).removeValue();
 			//ref.setValue(printData);
-			
+			lastSize = temp;
 			try {
-				Thread.sleep(100);
+				Thread.sleep(150);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

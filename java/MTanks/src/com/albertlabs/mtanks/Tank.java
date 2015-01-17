@@ -7,8 +7,6 @@ import java.util.List;
 public class Tank implements WorldObject {
 
 	private BoxBody body;
-	private boolean alive;
-	
 	private double moveSpeed;
 	private double moveTime;
 	private double turnSpeed;
@@ -34,8 +32,9 @@ public class Tank implements WorldObject {
 	}
 	
 	public void begin(){ //accessible to user
-		move(-5,500);
-		turn(Math.PI/6, 4);
+		shoot();
+	//	move(-5,500);
+	//	turn(Math.PI/6, 4);
 	}
 	
 	public void act() { //used for only tank, accessible to user
@@ -96,7 +95,7 @@ public void move(double speed, int time) { //negative moves backwards positive m
 	
 	public void shoot(){
 //		GameSim.world.add(new Bullet(body.getX()+Math.cos(turretAngle)*5, body.getY()+Math.sin(turretAngle)*5, 7, turretAngle, this));
-		GameSim.world.add(new Bullet(body.getX(), body.getY(), 7, turretAngle, this));
+		GameSim.objectCreate(new Bullet(body.getX(), body.getY(), 7, turretAngle, this));
 	}
 	
 	public void turnTurret(double speed, int time) {
@@ -117,28 +116,27 @@ public void move(double speed, int time) { //negative moves backwards positive m
 	
 	@Override
 	public void collide(WorldObject o) { //TODO collide stuff
-		int dir = 1;
-		if(moveSpeed < 0) dir = -1;
-		while(this.body.checkCollision(o.getBody())){
-			body.setX(body.getX()+Math.cos(body.getHeading())*dir);
-			body.setY(body.getY()+Math.sin(body.getHeading())*dir);
+		
+		if(o instanceof Bullet){
+			health -= 20;
+			
+		}else{
+		if(this.body.checkCollision(o.getBody())){
+			body.setX(body.getX()+Math.cos(body.getHeading())*-moveSpeed);
+			body.setY(body.getY()+Math.sin(body.getHeading())*-moveSpeed);
 		}
 		moveSpeed = 0;
 		moveTime = 0;
 		
 		health -= 10;
+		}
 	}
 
 	@Override
 	public void die() {
-		alive = false; //TODO ? CHANGING HOW DIE WORKS I THINK
+		GameSim.objectDeath(this);
 	}
 
-	@Override
-	public boolean alive() {
-		return alive;
-	}
-	
 	public BoxBody getBody(){
 		return body;
 	}
@@ -159,12 +157,12 @@ public void move(double speed, int time) { //negative moves backwards positive m
 
 		List<PrintData> list = new ArrayList<PrintData>();
 		list.add(new PrintData("tank", body.getX(), body.getY(), body.getWidth(),
-				body.getHeight(), body.getHeading()-Math.PI/2, 
+				body.getHeight(), body.getHeading(), 
 						health, MAX_HEALTH));
 		list.add(new PrintData("turret", body.getX(), body.getY(), body.getWidth(),
-				body.getHeight(), body.getHeading()+turretAngle-Math.PI/2, 0, 0));
+				body.getHeight(), body.getHeading()+turretAngle, 0, 0));
 		list.add(new PrintData("sensor", body.getX(), body.getY(), body.getWidth()/2,
-				body.getHeight()/2, body.getHeading()+turretAngle+radarAngle-Math.PI/2, 0, 0));
+				body.getHeight()/2, body.getHeading()+turretAngle+radarAngle, 0, 0));
 		return list;
 	}
 	
