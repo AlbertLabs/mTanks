@@ -33,10 +33,10 @@ public class GameSim {
 			world.add(TankLoader.loadTank(tankURLs.get(i)));
 		}*/
 		
-		world.add(new Tank(100, 100, 50, 50, 0));
-		world.add(new Tank(400, 100, 50, 50, 0));
-		world.add(new Tank(100, 400, 50, 50, 0));
-		world.add(new Tank(400, 400, 50, 50, 0));
+		world.add(new Tank(100, 100, 25, 25, 0));
+		world.add(new Tank(400, 100, 25, 25, 0));
+		world.add(new Tank(100, 400, 25, 25, 0));
+		world.add(new Tank(400, 400, 25, 25, 0));
 		
 		Box left = new Box(7, 250, 15, 500, 0);
 		Box right = new Box(500, 250, 15, 500, 0);
@@ -85,11 +85,32 @@ public class GameSim {
 				printData.addAll(a.print());
 			}
 			//System.out.println("TEST");
-			//System.out.println(printData);
-			ref.setValue(printData);
+			for(int i = 0; i < printData.size(); i++){
+				
+				/*
+				 * 		this.x = x;
+		this.y = y;
+		this.width=w;
+		this.height=h;
+		this.angle=angle;
+		this.health=he;
+		this.maxHealth=mhe;
+		this.image = image;
+				 */
+
+				ref.child(Integer.toString(i)).child("y").setValue(printData.get(i).y);
+				ref.child(Integer.toString(i)).child("x").setValue(printData.get(i).x);
+				ref.child(Integer.toString(i)).child("width").setValue(printData.get(i).width);
+				ref.child(Integer.toString(i)).child("height").setValue(printData.get(i).height);
+				ref.child(Integer.toString(i)).child("angle").setValue(printData.get(i).angle);
+				ref.child(Integer.toString(i)).child("health").setValue(printData.get(i).health);
+				ref.child(Integer.toString(i)).child("maxHealth").setValue(printData.get(i).maxHealth);
+				ref.child(Integer.toString(i)).child("image").setValue(printData.get(i).image);
+			}
+			//ref.setValue(printData);
 			
 			try {
-				Thread.sleep(10);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
