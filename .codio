@@ -1,0 +1,13 @@
+{
+// Configure your Run and Preview buttons here.
+
+// Run button configuration
+  "commands": {
+        "Start Rails Server": "rails server"
+  },
+
+// Preview button configuration
+  "preview": {
+        "Preview": "http://{{domain}}:3000/"
+  }
+}
