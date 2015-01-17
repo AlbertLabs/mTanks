@@ -3,12 +3,10 @@ package com.albertlabs.mtanks;
 public class CircleBody implements Body {
 
 	private double x, y, heading, radius;
-	private String image;
 	
-	public CircleBody(double x, double y, double heading, double radius, String image) {
+	public CircleBody(double x, double y, double heading, double radius) {
 		this.x = x;
 		this.y = y;
-		this.image = image;
 		this.heading = heading;
 		this.radius = radius;
 	}
@@ -27,6 +25,8 @@ public class CircleBody implements Body {
 
 	public void setHeading(double h) {
 		heading = h;
+		while(heading > Math.PI*2) heading -= Math.PI*2;
+		while(heading < 0) heading += Math.PI*2;
 	}
 
 	public double getRadius() {
@@ -63,13 +63,6 @@ public class CircleBody implements Body {
 		if (o instanceof CircleBody)
 			return checkCollision((CircleBody) o);
 		return checkCollision((BoxBody) o);
-	}
-
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String img) {
-		image = img;
 	}
 
 }

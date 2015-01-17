@@ -3,16 +3,14 @@ package com.albertlabs.mtanks;
 public class BoxBody implements Body {
 
 	private double x, y, heading, width, height, diag, rectAngle;
-	private String image;
 	
 	public BoxBody(double x, double y, double width, double height,
-			double heading, String image) {
+			double heading) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.heading = heading;
-		this.image = image;
 		diag = Math.sqrt((width/2)*(width/2) + (height/2)*(height/2));
 	    rectAngle = Math.atan2(height/2, width/2);
 	}
@@ -22,50 +20,50 @@ public class BoxBody implements Body {
 			return Math.abs(this.getX() - x) < this.width() / 2
 					&& Math.abs(this.getY() - y) < this.height() / 2;
 
-		double tx = Math.cos(Math.toRadians(this.getHeading())) * x
-				- Math.sin(Math.toRadians(this.getHeading())) * y;
-		double ty = Math.cos(Math.toRadians(this.getHeading())) * y
-				+ Math.sin(Math.toRadians(this.getHeading())) * x;
+		double tx = Math.cos(this.getHeading()) * x
+				- Math.sin(this.getHeading()) * y;
+		double ty = Math.cos(this.getHeading()) * y
+				+ Math.sin(this.getHeading()) * x;
 
-		double cx = Math.cos(Math.toRadians(this.getHeading())) * this.getX()
-				- Math.sin(Math.toRadians(this.getHeading())) * this.getY();
-		double cy = Math.cos(Math.toRadians(this.getHeading())) * this.getY()
-				+ Math.sin(Math.toRadians(this.getHeading())) * this.getX();
+		double cx = Math.cos(this.getHeading()) * this.getX()
+				- Math.sin(this.getHeading()) * this.getY();
+		double cy = Math.cos(this.getHeading()) * this.getY()
+				+ Math.sin(this.getHeading()) * this.getX();
 
 		return Math.abs(cx - tx) < this.width() / 2
 				&& Math.abs(cy - ty) < this.height() / 2;
 	}
 
 	public double topLeftX() {
-		return x - diag * Math.cos(-rectAngle + Math.toRadians(heading));
+		return x - diag * Math.cos(-rectAngle + (heading));
 	}
 
 	public double topLeftY() {
-		return y - diag * Math.sin(-rectAngle + Math.toRadians(heading));
+		return y - diag * Math.sin(-rectAngle + (heading));
 	}
 
 	public double topRightX() {
-		return x + diag * Math.cos(rectAngle + Math.toRadians(heading));
+		return x + diag * Math.cos(rectAngle + (heading));
 	}
 
 	public double topRightY() {
-		return y + diag * Math.sin(rectAngle + Math.toRadians(heading));
+		return y + diag * Math.sin(rectAngle + (heading));
 	}
 
 	public double bottomLeftX() {
-		return x + diag * Math.cos(-rectAngle + Math.toRadians(heading));
+		return x + diag * Math.cos(-rectAngle + (heading));
 	}
 
 	public double bottomLeftY() {
-		return y + diag * Math.sin(-rectAngle + Math.toRadians(heading));
+		return y + diag * Math.sin(-rectAngle + (heading));
 	}
 
 	public double bottomRightX() {
-		return x - diag * Math.cos(rectAngle + Math.toRadians(heading));
+		return x - diag * Math.cos(rectAngle + (heading));
 	}
 
 	public double bottomRightY() {
-		return y - diag * Math.sin(rectAngle + Math.toRadians(heading));
+		return y - diag * Math.sin(rectAngle + (heading));
 	}
 
 	public double width() {
@@ -90,6 +88,8 @@ public class BoxBody implements Body {
 
 	public void setHeading(double h) {
 		this.heading = h;
+		while(heading > Math.PI*2) heading -= Math.PI*2;
+		while(heading < 0) heading += Math.PI*2;
 	}
 
 	public void setX(double x) {
@@ -109,14 +109,14 @@ public class BoxBody implements Body {
 			cx = this.getX();
 			cy = this.getY();
 		} else {
-			tx = Math.cos(Math.toRadians(this.getHeading())) * o.getX()
-					- Math.sin(Math.toRadians(this.getHeading())) * o.getY();
-			ty = Math.cos(Math.toRadians(this.getHeading())) * o.getY()
-					+ Math.sin(Math.toRadians(this.getHeading())) * o.getX();
-			cx = Math.cos(Math.toRadians(this.getHeading())) * this.getX()
-					- Math.sin(Math.toRadians(this.getHeading())) * this.getY();
-			cy = Math.cos(Math.toRadians(this.getHeading())) * this.getY()
-					+ Math.sin(Math.toRadians(this.getHeading())) * this.getX();
+			tx = Math.cos((this.getHeading())) * o.getX()
+					- Math.sin(this.getHeading()) * o.getY();
+			ty = Math.cos((this.getHeading())) * o.getY()
+					+ Math.sin(this.getHeading()) * o.getX();
+			cx = Math.cos((this.getHeading())) * this.getX()
+					- Math.sin(this.getHeading()) * this.getY();
+			cy = Math.cos((this.getHeading())) * this.getY()
+					+ Math.sin(this.getHeading()) * this.getX();
 		}
 
 		return containsPoint(o.getX(), o.getY())
@@ -239,13 +239,13 @@ public class BoxBody implements Body {
 		}
 		return distance < circleRadius;
 	}
-	
-	public String getImage() {
-		return image;
+
+	public double getHeight() {
+		return height;
 	}
-	
-	public void setImage(String img) {
-		image = img;
+
+	public double getWidth() {
+		return width;
 	}
 
 }

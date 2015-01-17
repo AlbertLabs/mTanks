@@ -12,19 +12,19 @@ public class GameSim {
 	GameSim(){
 		world = new World(500, 500);
         
-		BoxBody left = new BoxBody(7, 250, 15, 500, 0, "Border");
-		BoxBody right = new BoxBody(500, 250, 15, 500, 0,"Border");
-		BoxBody bottom = new BoxBody(250, 500, 507, 15, 0,"Border");
-		BoxBody top = new BoxBody(250, 7, 500, 15, 0,"Border");
-		BoxBody ball = new BoxBody(50, 50, 20, 20, 30,"Bullet");
-		CircleBody ball2 = new CircleBody(80, 50, 0, 10,"Bullet");
+		BoxBody left = new BoxBody(7, 250, 15, 500, 0);
+		BoxBody right = new BoxBody(500, 250, 15, 500, 0);
+		BoxBody bottom = new BoxBody(250, 500, 507, 15, 0);
+		BoxBody top = new BoxBody(250, 7, 500, 15, 0);
+		BoxBody ball = new BoxBody(50, 50, 20, 20, 30);
+		CircleBody ball2 = new CircleBody(80, 50, 0, 10);
 
 		double xspeed = 0.01;
 		double yspeed = -0.2;
 		double xspeed2 = 0.7;
 		double yspeed2 = 1;
 		
-		double spinSpeed = 5;
+		double spinSpeed = Math.PI*2/100;
 
 		world.addBody(left);
 		world.addBody(right);

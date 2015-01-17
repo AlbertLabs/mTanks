@@ -21,7 +21,4 @@ public interface Body {
 
 	public boolean checkCollision(Body b);
 	
-	public String getImage();
-	
-	public void setImage(String img);
 }
