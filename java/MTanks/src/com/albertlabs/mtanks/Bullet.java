@@ -46,9 +46,7 @@ public class Bullet implements WorldObject {
 	}
 
 	public void collide(WorldObject o) {
-		System.out.println("tank" + o.toString() + "  | "+ this.toString());
 
-		if(o.equals(this))return;
 		if(!o.equals(this.parent)){
 			die();
 		}

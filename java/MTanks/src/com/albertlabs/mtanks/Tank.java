@@ -116,10 +116,6 @@ public void move(double speed, int time) { //negative moves backwards positive m
 	
 	@Override
 	public void collide(WorldObject obj) { //TODO collide stuff
-		System.out.println("tank" + obj.toString() + "  | "+ this.toString());
-
-		if(obj.equals(this))return;
-		System.out.println(obj.toString() + "   "+ this.toString());
 		if(obj instanceof Bullet){
 			if(!((Bullet)obj).parent.equals(this))
 			health -= 20;

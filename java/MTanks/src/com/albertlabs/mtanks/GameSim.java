@@ -75,12 +75,16 @@ static int lastSize = 0;
 				a.loop(); //private side
 			}
 			
-			for(WorldObject a: (ArrayList<WorldObject>)world.getList().clone()){
+			for (WorldObject a : (ArrayList<WorldObject>) world.getList().clone()) {
 				List<WorldObject> col = world.collidingWith(a);
-				for(WorldObject b : col){
-					if(a instanceof Tank)
-						System.out.println(a + " hit " + b);
-					a.collide(b);
+				//System.out.print(a);
+//System.out.println(col);
+				for (WorldObject b : col){
+					//System.out.println("coll" + a + "   " + b);
+					if (!a.equals(b)) {
+						if (a instanceof Tank)
+							System.out.println(a + " hit " + b);
+						a.collide(b);}
 				}
 			}
 			
@@ -133,7 +137,7 @@ static int lastSize = 0;
 			//ref.setValue(printData);
 			lastSize = temp;
 			try {
-				Thread.sleep(150);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

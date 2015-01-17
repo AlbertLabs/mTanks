@@ -39,7 +39,7 @@ class World extends JPanel {
 		List<WorldObject> list = new ArrayList<WorldObject>();
 		for (WorldObject a : entity)
 			if (!a.equals(o) && o.getBody().checkCollision(a.getBody()))
-				list.add(o);
+				list.add(a);
 		return list;
 	}
 
