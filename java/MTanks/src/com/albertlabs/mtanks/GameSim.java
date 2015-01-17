@@ -34,10 +34,10 @@ public class GameSim {
 			world.add(TankLoader.loadTank(tankURLs.get(i)));
 		}*/
 		
-		world.add(new Tank(100, 100, 25, 25, 0));
-		world.add(new Tank(400, 100, 25, 25, 0));
-		world.add(new Tank(100, 400, 25, 25, 0));
-		world.add(new Tank(400, 400, 25, 25, 0));
+		world.add(new Tank(100, 100, 50, 50, 0));
+		world.add(new Tank(400, 100, 50, 50, 0));
+		world.add(new Tank(100, 400, 50, 50, 0));
+		world.add(new Tank(400, 400, 50, 50, 0));
 		
 		Box left = new Box(7, 250, 15, 500, 0);
 		Box right = new Box(500, 250, 15, 500, 0);
