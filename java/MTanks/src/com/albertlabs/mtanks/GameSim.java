@@ -6,7 +6,7 @@ public class GameSim {
 	
 	World world;
 	
-	Firebase ref = new Firebase("https://incandescent-heat-5535.firebaseio.com/gameTest");
+	Firebase ref = new Firebase("https://mtanks.firebaseio.com/");
 	
 	GameSim(){
 		world = new World(500, 500);
