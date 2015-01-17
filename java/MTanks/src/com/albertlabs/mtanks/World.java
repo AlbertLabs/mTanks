@@ -38,7 +38,7 @@ class World extends JPanel {
 	public List<WorldObject> collidingWith(WorldObject o) {
 		List<WorldObject> list = new ArrayList<WorldObject>();
 		for (WorldObject a : entity)
-			if (a != o && o.getBody().checkCollision(a.getBody()))
+			if (!a.equals(o) && o.getBody().checkCollision(a.getBody()))
 				list.add(o);
 		return list;
 	}

@@ -164,7 +164,8 @@ public class BoxBody implements Body {
 	public boolean checkCollision(Body o) {
 		if (o instanceof CircleBody)
 			return checkCollision((CircleBody) o);
-		return checkCollision((BoxBody) o);	}
+		return checkCollision((BoxBody) o);
+	}
 
 	public boolean checkCollision(BoxBody o) {
 		for (int x = 0; x < 2; x++) {

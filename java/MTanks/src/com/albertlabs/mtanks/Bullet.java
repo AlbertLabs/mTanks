@@ -11,10 +11,10 @@ public class Bullet implements WorldObject {
 	private boolean safe = true;
 
 	public static final double BULLET_DISTANCE = 500;
-	private WorldObject parent;
+	public Tank parent;
 	private double distLeft = BULLET_DISTANCE;
 
-	Bullet(double x, double y, double radius, double heading, WorldObject parent) {
+	Bullet(double x, double y, double radius, double heading, Tank parent) {
 		body = new CircleBody(x, y, radius, heading);
 		xspeed = Math.acos(heading)*5;
 		yspeed = Math.asin(heading)*5;
@@ -46,7 +46,10 @@ public class Bullet implements WorldObject {
 	}
 
 	public void collide(WorldObject o) {
-		if(!safe){
+		System.out.println("tank" + o.toString() + "  | "+ this.toString());
+
+		if(o.equals(this))return;
+		if(!o.equals(this.parent)){
 			die();
 		}
 	}

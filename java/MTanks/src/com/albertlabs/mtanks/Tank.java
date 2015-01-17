@@ -115,13 +115,17 @@ public void move(double speed, int time) { //negative moves backwards positive m
 	}
 	
 	@Override
-	public void collide(WorldObject o) { //TODO collide stuff
-		
-		if(o instanceof Bullet){
+	public void collide(WorldObject obj) { //TODO collide stuff
+		System.out.println("tank" + obj.toString() + "  | "+ this.toString());
+
+		if(obj.equals(this))return;
+		System.out.println(obj.toString() + "   "+ this.toString());
+		if(obj instanceof Bullet){
+			if(!((Bullet)obj).parent.equals(this))
 			health -= 20;
 			
 		}else{
-		if(this.body.checkCollision(o.getBody())){
+		if(this.body.checkCollision(obj.getBody())){
 			body.setX(body.getX()+Math.cos(body.getHeading())*-moveSpeed);
 			body.setY(body.getY()+Math.sin(body.getHeading())*-moveSpeed);
 		}
@@ -157,12 +161,12 @@ public void move(double speed, int time) { //negative moves backwards positive m
 
 		List<PrintData> list = new ArrayList<PrintData>();
 		list.add(new PrintData("tank", body.getX(), body.getY(), body.getWidth(),
-				body.getHeight(), body.getHeading(), 
+				body.getHeight(), body.getHeading()+Math.PI/2, 
 						health, MAX_HEALTH));
 		list.add(new PrintData("turret", body.getX(), body.getY(), body.getWidth(),
-				body.getHeight(), body.getHeading()+turretAngle, 0, 0));
+				body.getHeight(), body.getHeading()+turretAngle+Math.PI/2, 0, 0));
 		list.add(new PrintData("sensor", body.getX(), body.getY(), body.getWidth()/2,
-				body.getHeight()/2, body.getHeading()+turretAngle+radarAngle, 0, 0));
+				body.getHeight()/2, body.getHeading()+turretAngle+radarAngle+Math.PI/2, 0, 0));
 		return list;
 	}
 	
