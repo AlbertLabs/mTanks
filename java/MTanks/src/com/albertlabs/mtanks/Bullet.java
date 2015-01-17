@@ -11,13 +11,14 @@ public class Bullet implements WorldObject {
 	private boolean alive = true;
 
 	public static final double BULLET_DISTANCE = 500;
-
+	private WorldObject parent;
 	private double distLeft = BULLET_DISTANCE;
 
-	Bullet(double x, double y, double radius, double heading) {
+	Bullet(double x, double y, double radius, double heading, WorldObject parent) {
 		body = new CircleBody(x, y, radius, heading);
 		xspeed = Math.asin(heading)*5;
 		yspeed = Math.acos(heading)*5;
+		this.parent = parent;
 	}
 
 	public List<PrintData> print() {
@@ -41,7 +42,8 @@ public class Bullet implements WorldObject {
 	}
 
 	public void collide(WorldObject o) {
-		//die();
+		if( o != parent)
+			die();
 	}
 
 	public boolean alive() {
