@@ -34,7 +34,7 @@ public class Tank implements WorldObject {
 	}
 	
 	public void begin(){ //accessible to user
-		move(-5,10);
+		move(-5,30);
 		turn(Math.PI/6, 4);
 	}
 	
@@ -114,7 +114,10 @@ public void move(double speed, int time) { //negative moves backwards positive m
 	
 	@Override
 	public void collide(WorldObject o) { //TODO collide stuff
+		moveSpeed = 0;
 		moveTime = 0;
+		
+		health -= 10;
 	}
 
 	@Override
