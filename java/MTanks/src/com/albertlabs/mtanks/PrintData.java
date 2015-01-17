@@ -13,21 +13,23 @@ public class PrintData {
 		}
 	}
 	
-	PrintData(double x, double y, double w, double h, double angle){
+	PrintData(String image, double x, double y, double w, double h, double angle){
 		this.x = x;
 		this.y = y;
 		this.width=w;
 		this.height=h;
 		this.angle=angle;
+		this.image = image;
 	}
 	
-	PrintData(double x, double y, double w, double h, double angle, HealthBar hb){
+	PrintData(String image, double x, double y, double w, double h, double angle, HealthBar hb){
 		this.x = x;
 		this.y = y;
 		this.width=w;
 		this.height=h;
 		this.angle=angle;
 		this.healthBar = hb;
+		this.image = image;
 	}
 	
 	String image;

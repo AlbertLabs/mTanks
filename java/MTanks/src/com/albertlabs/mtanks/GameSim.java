@@ -1,80 +1,92 @@
 package com.albertlabs.mtanks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.firebase.client.Firebase;
 
 public class GameSim {
-	
-	World world;
-	
-	Firebase ref = new Firebase("https://mtanks.firebaseio.com/");
-	
-    
-	GameSim(){
-		world = new World(500, 500);
-        
-		BoxBody left = new BoxBody(7, 250, 15, 500, 0);
-		BoxBody right = new BoxBody(500, 250, 15, 500, 0);
-		BoxBody bottom = new BoxBody(250, 500, 507, 15, 0);
-		BoxBody top = new BoxBody(250, 7, 500, 15, 0);
-		BoxBody ball = new BoxBody(50, 50, 20, 20, 30);
-		CircleBody ball2 = new CircleBody(80, 50, 0, 10);
 
-		double xspeed = 0.01;
-		double yspeed = -0.2;
-		double xspeed2 = 0.7;
-		double yspeed2 = 1;
+	static World world;
+	
+	static Firebase ref;
+
+	//Parameters: gameURL, tankURL1, tankURL2, tankURL3...
+	public static void main(String[] args) {
+		String gameURL = args[0];
+		List<String> tankURLs = new ArrayList<String>();
+		for(int i = 1; i < args.length; i++){
+			tankURLs.add(args[i]);
+		}
 		
-		double spinSpeed = Math.PI*2/100;
+		ref = new Firebase(gameURL);
+		
+		world = new World(500, 500);
 
-		world.addBody(left);
-		world.addBody(right);
-		world.addBody(top);
-		world.addBody(bottom);
-		world.addBody(ball);
-		world.addBody(ball2);
-
-		int count = 0;
+		//Background List
+		//Bullet List
+		//
+		
+		//for each tank
+		
+	/*	for(int i = 0; i < tankURLs.size(); i++){
+			world.add(TankLoader.loadTank(tankURLs.get(i)));
+		}*/
+		
+		world.add(new Tank(100, 100, 50, 50, 0));
+		world.add(new Tank(400, 100, 50, 50, 0));
+		world.add(new Tank(100, 400, 50, 50, 0));
+		world.add(new Tank(400, 400, 50, 50, 0));
+		
+		Box left = new Box(7, 250, 15, 500, 0);
+		Box right = new Box(500, 250, 15, 500, 0);
+		Box bottom = new Box(250, 500, 507, 15, 0);
+		Box top = new Box(250, 7, 500, 15, 0);
+		
+		world.add(left);
+		world.add(right);
+		world.add(top);
+		world.add(bottom);
+		
+		
+		for(WorldObject a : world.getList()){
+			if(a instanceof Tank)
+			((Tank)a).begin();
+		}
 		
 		while (true) {
-			System.out.println(count++);
-			if (ball.checkCollision(ball2)) {
-				double temp1 = xspeed;
-				double temp2 = yspeed;
-				xspeed = xspeed2;
-				yspeed = yspeed2;
-				xspeed2 = temp1;
-				yspeed2 = temp2;
+
+			for(WorldObject a : world.getList()){
+				if(a instanceof Tank)
+				((Tank)a).run(); //public side
 			}
-
-			if (left.checkCollision(ball) || ball.checkCollision(right)) {
-				xspeed *= -1;
-				System.out.println("Thing 1 hit thing");
+			
+			for(WorldObject a : world.getList()){
+				if(a instanceof Tank)
+				a.act(); //private side
 			}
-
-			if (ball.checkCollision(top) || ball.checkCollision(bottom)) {
-				yspeed *= -1;
-				System.out.println("Thing 1 hit thing");
+			
+			for(WorldObject a: world.getList()){
+				List<WorldObject> col = world.collidingWith(a);
+				for(WorldObject b : col){
+					a.collide(b);
+				}
 			}
-
-			ball.setX(ball.getX() + xspeed);
-			ball.setY(ball.getY() + yspeed);
-			ball.setHeading(ball.getHeading() + spinSpeed);
-
-			if (left.checkCollision(ball2) || ball2.checkCollision(right)) {
-				xspeed2 *= -1;
-				System.out.println("Thing 2 hit thing");
+			
+			List <WorldObject> tempList = new ArrayList<WorldObject>();
+			for(WorldObject a: world.getList()){
+				if(a.alive()){
+					tempList.add(a);
+				}
 			}
+			world.getList().retainAll(tempList);
 
-			if (ball2.checkCollision(top) || ball2.checkCollision(bottom)) {
-				yspeed2 *= -1;
-				System.out.println("Thing 2 hit thing");
+			List<PrintData> printData = new ArrayList<PrintData>();
+			for(WorldObject a: world.getList()){
+				printData.addAll(a.print());
 			}
-
-			ball2.setX(ball2.getX() + xspeed2);
-			ball2.setY(ball2.getY() + yspeed2);
-			ball2.setHeading(ball.getHeading() + spinSpeed);
-
-			ref.setValue(world.getList());
+			System.out.println("TEST");
+			ref.setValue(printData);
 			
 			try {
 				Thread.sleep(10);
@@ -84,11 +96,7 @@ public class GameSim {
 		}
 	}
 	
-	public static void main(String[] args) {
         
         
         
-		new GameSim();
-	}
-	
 }

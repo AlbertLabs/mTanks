@@ -1,4 +1,4 @@
-class TankLoader extends Tank{
+class TankLoader{
     
     TankLoader(..., string url){
         super(...)

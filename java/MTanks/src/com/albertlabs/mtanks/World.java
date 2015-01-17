@@ -16,25 +16,29 @@ import javax.swing.SwingConstants;
 
 class World extends JPanel {
 
-	private List<Body> entity = new ArrayList<Body>();
+	private List<WorldObject> entity = new ArrayList<WorldObject>();
 
-	public List<Body> getList(){
+	public List<WorldObject> getList(){
 		return entity;
 	}
 	
-	public void addBody(Body o) {
+	public void add(WorldObject o) {
 		if (!entity.contains(o))
 			entity.add(o);
 	}
 
-	public void removeBody(Body o) {
+	public void remove(WorldObject o) {
+			entity.remove(o);
+	}
+
+	public void removeBody(WorldObject o) {
 		entity.remove(o);
 	}
 
-	public List<Body> collidingWith(Body o) {
-		List<Body> list = new ArrayList<Body>();
-		for (Body a : entity)
-			if (a != o && o.checkCollision(a))
+	public List<WorldObject> collidingWith(WorldObject o) {
+		List<WorldObject> list = new ArrayList<WorldObject>();
+		for (WorldObject a : entity)
+			if (a != o && o.getBody().checkCollision(a.getBody()))
 				list.add(o);
 		return list;
 	}
@@ -81,15 +85,15 @@ class World extends JPanel {
 		title.setText("Displaying world with " + entity.size() + " objects");
 		
 		g.setColor(new Color(100, 0, 255));
-		for (Body a : entity) {
-			if (a instanceof CircleBody) {
-				CircleBody b = (CircleBody) a;
-				g.fillArc((int) a.getX() - (int) b.getRadius() / 2,
-						(int) a.getY() - (int) b.getRadius() / 2,
+		for (WorldObject a : entity) {
+			if (a.getBody() instanceof CircleBody) {
+				CircleBody b = (CircleBody) a.getBody();
+				g.fillArc((int) b.getX() - (int) b.getRadius() / 2,
+						(int) a.getBody().getY() - (int) b.getRadius() / 2,
 						(int) b.getRadius() * 2, (int) b.getRadius() * 2, 0,
 						360);
 			} else {
-				BoxBody b = (BoxBody) a;
+				BoxBody b = (BoxBody) a.getBody();
 				int[] intArray = new int[b.getXs().length];
 				for (int i = 0; i < intArray.length; ++i)
 					intArray[i] = (int) b.getXs()[i];
