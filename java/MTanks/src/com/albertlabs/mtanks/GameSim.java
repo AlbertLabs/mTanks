@@ -86,7 +86,8 @@ public class GameSim {
 				printData.addAll(a.print());
 			}
 			//System.out.println("TEST");
-		//	ref.setValue(printData);
+			//System.out.println(printData);
+			ref.setValue(printData);
 			
 			try {
 				Thread.sleep(10);
