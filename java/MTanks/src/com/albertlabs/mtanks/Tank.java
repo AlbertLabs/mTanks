@@ -24,23 +24,6 @@ public class Tank implements WorldObject {
 	private static final double MAX_SPEED = 10; //TODO set to non-arbitrary value
 	private static final double MIN_SPEED = -10; //TODO set to non-arbitrary value
 
-	public BoxBody getBody(){
-		return body;
-	}
-
-	public void begin(){ //accessible to user
-		move(-5,10);
-		turn(Math.PI/6, 4);
-	}
-	
-	public void shoot(){
-		GameSim.world.add(new Bullet(body.getX()+Math.cos(turretAngle)*15, body.getY()+Math.sin(turretAngle)*15, 7, turretAngle));
-	}
-	
-	public double getHealth() {
-		return health;
-	}
-
 	public final static double MAX_HEALTH = 100;
 	private double health =  MAX_HEALTH;
 
@@ -48,22 +31,13 @@ public class Tank implements WorldObject {
 		body = new BoxBody(x, y, width, height, heading);
 		turretAngle = body.getHeading();
 		radarAngle = body.getHeading();
-		
 	}
-
-	public List<PrintData> print() {
-
-		List<PrintData> list = new ArrayList<PrintData>();
-		list.add(new PrintData("tank", body.getX(), body.getY(), body.getWidth(),
-				body.getHeight(), body.getHeading(), 
-						health, MAX_HEALTH));
-		list.add(new PrintData("turret", body.getX(), body.getY(), body.getWidth(),
-				body.getHeight(), body.getHeading()+turretAngle, 0, 0));
-		list.add(new PrintData("sensor", body.getX(), body.getY(), body.getWidth()/2,
-				body.getHeight()/2, body.getHeading()+turretAngle+radarAngle, 0, 0));
-		return list;
+	
+	public void begin(){ //accessible to user
+		move(-5,10);
+		turn(Math.PI/6, 4);
 	}
-
+	
 	public void act() { //used for only tank, accessible to user
 
 		/* turretAngle+=0.1;
@@ -76,7 +50,7 @@ public class Tank implements WorldObject {
 		*/
 
 	}
-
+	
 	public void loop() { //used for all objects in world, not accessible to user
 		if(moveTime > 0){
 			moveTime--;
@@ -97,29 +71,16 @@ public class Tank implements WorldObject {
 		}
 		
 	}
-
-	@Override
-	public void collide(WorldObject o) {
-		moveTime = 0;
-		
-		
-	}
-
-	@Override
-	public void die() {
-		alive = false; //TODO ? CHANGING HOW DIE WORKS I THINK
-	}
-
-	@Override
-	public boolean alive() {
-		return alive;
-	}
 	
-	public void setMoveSpeed(int speed) {
-		moveSpeed = speed;
-	}
-	public double getMoveSpeed(){
-		return moveSpeed;
+public void move(double speed, int time) { //negative moves backwards positive moves forwards
+		
+		if(speed > MAX_SPEED) moveSpeed = MAX_SPEED;
+		else if(speed < MIN_SPEED) moveSpeed = MIN_SPEED;
+		else moveSpeed = speed;
+		if(time > 0) {
+			moveTime = time;
+		}
+		
 	}
 
 	public void turn (double speed, int time) { //turnSpeed is in radians
@@ -131,18 +92,8 @@ public class Tank implements WorldObject {
 				turnTime = time;
 	}
 	
-	public void move(double speed, int time) { //negative moves backwards positive moves forwards
-		
-		if(speed > MAX_SPEED) moveSpeed = MAX_SPEED;
-		else if(speed < MIN_SPEED) moveSpeed = MIN_SPEED;
-		else moveSpeed = speed;
-		if(time > 0) {
-			moveTime = time;
-		}
-		
-	}
-	public void stop() {
-		moveSpeed = 0;
+	public void shoot(){
+		GameSim.world.add(new Bullet(body.getX()+Math.cos(turretAngle)*15, body.getY()+Math.sin(turretAngle)*15, 7, turretAngle));
 	}
 	
 	public void turnTurret(double speed, int time) {
@@ -161,5 +112,48 @@ public class Tank implements WorldObject {
 				radarTime = time;
 	}
 	
+	@Override
+	public void collide(WorldObject o) { //TODO collide stuff
+		moveTime = 0;
+	}
 
+	@Override
+	public void die() {
+		alive = false; //TODO ? CHANGING HOW DIE WORKS I THINK
+	}
+
+	@Override
+	public boolean alive() {
+		return alive;
+	}
+	
+	public BoxBody getBody(){
+		return body;
+	}
+	
+	public double getHealth() {
+		return health;
+	}
+	
+	public void setMoveSpeed(int speed) {
+		moveSpeed = speed;
+	}
+	public double getMoveSpeed(){
+		return moveSpeed;
+	}
+	
+	
+	public List<PrintData> print() {
+
+		List<PrintData> list = new ArrayList<PrintData>();
+		list.add(new PrintData("tank", body.getX(), body.getY(), body.getWidth(),
+				body.getHeight(), body.getHeading(), 
+						health, MAX_HEALTH));
+		list.add(new PrintData("turret", body.getX(), body.getY(), body.getWidth(),
+				body.getHeight(), body.getHeading()+turretAngle, 0, 0));
+		list.add(new PrintData("sensor", body.getX(), body.getY(), body.getWidth()/2,
+				body.getHeight()/2, body.getHeading()+turretAngle+radarAngle, 0, 0));
+		return list;
+	}
+	
 }
