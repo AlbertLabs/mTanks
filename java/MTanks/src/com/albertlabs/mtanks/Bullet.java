@@ -21,7 +21,7 @@ public class Bullet implements WorldObject {
 	public List<PrintData> print() {
 		List<PrintData> list = new ArrayList<PrintData>();
 		list.add(new PrintData("bullet", body.getX(), body.getY(), 2 * body
-				.getRadius(), 2 * body.getRadius(), body.getHeading()));
+				.getRadius(), 2 * body.getRadius(), body.getHeading(), 0, 0));
 		return list;
 	}
 

@@ -2,33 +2,20 @@ package com.albertlabs.mtanks;
 
 public class PrintData {
 	
-	static class HealthBar{
 
 		double health;
 		double maxHealth;
 		
-		HealthBar(double h, double mh){
-			health = h;
-			maxHealth = mh;
-		}
-	}
+
 	
-	PrintData(String image, double x, double y, double w, double h, double angle){
+	PrintData(String image, double x, double y, double w, double h, double angle, double he, double mhe){
 		this.x = x;
 		this.y = y;
 		this.width=w;
 		this.height=h;
 		this.angle=angle;
-		this.image = image;
-	}
-	
-	PrintData(String image, double x, double y, double w, double h, double angle, HealthBar hb){
-		this.x = x;
-		this.y = y;
-		this.width=w;
-		this.height=h;
-		this.angle=angle;
-		this.healthBar = hb;
+		this.health=he;
+		this.maxHealth=mhe;
 		this.image = image;
 	}
 	
@@ -39,5 +26,4 @@ public class PrintData {
 	double width;
 	double height;
 	double angle;
-	HealthBar healthBar;
 }
