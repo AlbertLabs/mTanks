@@ -38,3 +38,6 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+
+#google auth
+gem "omniauth-google-oauth2", "~> 0.2.1"
