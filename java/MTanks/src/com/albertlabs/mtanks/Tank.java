@@ -9,6 +9,8 @@ public class Tank implements WorldObject {
 	private BoxBody body;
 	private double health;
 	private boolean alive;
+	private double speed;
+	//private int moveTime;
 	
 	private double turretAngle = 0;
 	private double sensorAngle = 0;
@@ -17,7 +19,7 @@ public class Tank implements WorldObject {
 		return body;
 	}
 
-	public void begin(){
+	public void begin(){ //accessible to user
 		
 	}
 	
@@ -44,12 +46,12 @@ public class Tank implements WorldObject {
 		return list;
 	}
 
-	public void act() { //used for only tank
+	public void act() { //used for only tank, accessible to user
 		// TODO Auto-generated method stub
-		
+		move(.0000000000001);
 	}
 
-	public void loop() { //used for all objects in world
+	public void loop() { //used for all objects in world, not accessible to user
 		// TODO Auto-generated method stub
 		
 	}
@@ -69,5 +71,25 @@ public class Tank implements WorldObject {
 	public boolean alive() {
 		return alive;
 	}
+	
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+	public double getSpeed(){
+		return speed;
+	}
+
+	public void turn (double turnSpeed) { //turnSpeed is in radians
+		body.setHeading(turnSpeed);
+	}
+	
+	public void move(double speed) { //negative moves backwards positive moves forwards
+		double direction = body.getHeading();
+		double xDir = Math.cos(direction);
+		double yDir = Math.sin(direction);
+		body.setX(xDir + speed);
+		body.setY(yDir + speed);
+	}
+	
 
 }
