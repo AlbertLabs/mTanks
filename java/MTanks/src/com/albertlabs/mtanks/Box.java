@@ -26,7 +26,7 @@ public class Box implements WorldObject {
 		//Do nothing
 	}
 
-	public void act() {
+	public void loop() {
 		//Do nothing
 	}
 

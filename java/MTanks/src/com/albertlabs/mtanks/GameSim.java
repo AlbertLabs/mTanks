@@ -56,14 +56,13 @@ public class GameSim {
 		
 		while (true) {
 
-			for(WorldObject a : world.getList()){
+			for(WorldObject a : world.getList()){ //only Tanks run
 				if(a instanceof Tank)
-				((Tank)a).run(); //public side
+				((Tank)a).act(); //public side
 			}
 			
-			for(WorldObject a : world.getList()){
-				if(a instanceof Tank)
-				a.act(); //private side
+			for(WorldObject a : world.getList()){ //everybody acts
+				a.loop(); //private side
 			}
 			
 			for(WorldObject a: world.getList()){
