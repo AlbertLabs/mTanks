@@ -14,12 +14,13 @@ public class GameSim {
 	//Parameters: gameURL, tankURL1, tankURL2, tankURL3...
 	public static void main(String[] args) {
 		String gameURL = args[0];
-		List<String> tankURLs = new ArrayList<String>();
+		ArrayList<String> tankURLs = new ArrayList<String>();
 		for(int i = 1; i < args.length; i++){
 			tankURLs.add(args[i]);
 		}
 		
 		ref = new Firebase(gameURL);
+		ref.setValue("");
 		
 		world = new World(500, 500);
 
@@ -48,40 +49,40 @@ public class GameSim {
 		world.add(top);
 		world.add(bottom);
 		
-		
-		for(WorldObject a : world.getList()){
+		for(WorldObject a : (ArrayList<WorldObject>)world.getList().clone()){
 			if(a instanceof Tank)
 			((Tank)a).begin();
 		}
 		
 		while (true) {
-
-			for(WorldObject a : world.getList()){ //only Tanks run
+			for(WorldObject a : (ArrayList<WorldObject>)world.getList().clone()){ //only Tanks run
 				if(a instanceof Tank)
 				((Tank)a).act(); //public side
 			}
 			
-			for(WorldObject a : world.getList()){ //everybody acts
+			for(WorldObject a : (ArrayList<WorldObject>)world.getList().clone()){ //everybody acts
 				a.loop(); //private side
 			}
 			
-			for(WorldObject a: world.getList()){
+			for(WorldObject a: (ArrayList<WorldObject>)world.getList().clone()){
 				List<WorldObject> col = world.collidingWith(a);
 				for(WorldObject b : col){
 					a.collide(b);
 				}
 			}
-			/*
+			
 			List <WorldObject> tempList = new ArrayList<WorldObject>();
 			for(WorldObject a: world.getList()){
 				if(a.alive()){
 					tempList.add(a);
 				}
 			}
-			world.getList().retainAll(tempList);*/
+		/*	for(WorldObject a: tempList){
+				world.remove(a);
+			}*/
 
 			List<PrintData> printData = new ArrayList<PrintData>();
-			for(WorldObject a: world.getList()){
+			for(WorldObject a: (ArrayList<WorldObject>)world.getList().clone()){
 				printData.addAll(a.print());
 			}
 			//System.out.println("TEST");
@@ -97,7 +98,7 @@ public class GameSim {
 		this.maxHealth=mhe;
 		this.image = image;
 				 */
-
+				world.repaint();
 				ref.child(Integer.toString(i)).child("y").setValue(printData.get(i).y);
 				ref.child(Integer.toString(i)).child("x").setValue(printData.get(i).x);
 				ref.child(Integer.toString(i)).child("width").setValue(printData.get(i).width);

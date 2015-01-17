@@ -16,6 +16,8 @@ public class Bullet implements WorldObject {
 
 	Bullet(double x, double y, double radius, double heading) {
 		body = new CircleBody(x, y, radius, heading);
+		xspeed = Math.asin(heading)*5;
+		yspeed = Math.acos(heading)*5;
 	}
 
 	public List<PrintData> print() {
@@ -39,8 +41,7 @@ public class Bullet implements WorldObject {
 	}
 
 	public void collide(WorldObject o) {
-		xspeed *= -1;
-		yspeed *= -1;
+		//die();
 	}
 
 	public boolean alive() {
@@ -48,6 +49,7 @@ public class Bullet implements WorldObject {
 	}
 
 	public void die() {
+		GameSim.world.remove(this);
 		alive = false;
 	}
 

@@ -8,8 +8,11 @@ public class Tank implements WorldObject {
 
 	private BoxBody body;
 	private boolean alive;
-	private double speed;
-	//private int moveTime;
+	
+	private double moveSpeed;
+	private double moveTime;
+	private double turnSpeed;
+	private double turnTime;
 	
 	private double turretAngle = 0;
 	private double sensorAngle = 0;
@@ -20,6 +23,10 @@ public class Tank implements WorldObject {
 
 	public void begin(){ //accessible to user
 		
+	}
+	
+	public void shoot(){
+		GameSim.world.add(new Bullet(body.getX()+Math.cos(turretAngle)*15, body.getY()+Math.sin(turretAngle)*15, 7, turretAngle));
 	}
 	
 	public double getHealth() {
@@ -54,23 +61,32 @@ public class Tank implements WorldObject {
 		body.setX(body.getX()+Math.cos(body.getHeading())*1);
 		body.setY(body.getY()+Math.sin(body.getHeading())*1);
 		health-=1;
-		if(health == 0) health = 100;
+		if(health == 0) { health = 100; shoot(); }
 	}
 
 	public void loop() { //used for all objects in world, not accessible to user
-		// TODO Auto-generated method stub
+		if(moveTime > 0){
+			moveTime--;
+			body.setX(body.getX()+Math.cos(body.getHeading())*moveSpeed);
+			body.setY(body.getY()+Math.sin(body.getHeading())*moveSpeed);
+		}
+		if(turnTime > 0){
+			turnTime--;
+			body.setHeading(body.getHeading()+turnSpeed);
+		}
 		
 	}
 
 	@Override
 	public void collide(WorldObject o) {
-		// TODO Auto-generated method stub
+		moveTime = 0;
+		
 		
 	}
 
 	@Override
 	public void die() {
-		alive = false;
+		alive = false; //CHANING HOW DIE WORKS I THINK
 	}
 
 	@Override
@@ -85,16 +101,22 @@ public class Tank implements WorldObject {
 		return speed;
 	}
 
-	public void turn (double turnSpeed) { //turnSpeed is in radians
-		body.setHeading(turnSpeed);
+	public void turn (double speed, int time) { //turnSpeed is in radians
+	
+		if(speed > MAX_SPEED) turnSpeed = MAX_SPEED;
+		else if(speed < MIN_SPEED) turnSpeed = MIN_SPEED;
+		else turnSpeed = speed;
+		if(time > 0)
+				turnTime = time;
 	}
 	
-	public void move(double speed) { //negative moves backwards positive moves forwards
-		double direction = body.getHeading();
-		double xDir = Math.cos(direction);
-		double yDir = Math.sin(direction);
-		body.setX(xDir + speed);
-		body.setY(yDir + speed);
+	public void move(double speed, int time) { //negative moves backwards positive moves forwards
+		
+		if(speed > MAX_SPEED) moveSpeed = MAX_SPEED;
+		else if(speed < MIN_SPEED) moveSpeed = MIN_SPEED;
+		else moveSpeed = speed;
+		if(time > 0)
+				moveTime = time;
 	}
 	
 

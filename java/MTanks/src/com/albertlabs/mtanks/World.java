@@ -16,9 +16,9 @@ import javax.swing.SwingConstants;
 
 class World extends JPanel {
 
-	private List<WorldObject> entity = new ArrayList<WorldObject>();
+	private ArrayList<WorldObject> entity = new ArrayList<WorldObject>();
 
-	public List<WorldObject> getList(){
+	public ArrayList<WorldObject> getList(){
 		return entity;
 	}
 	
@@ -103,11 +103,5 @@ class World extends JPanel {
 				g.fillPolygon(intArray, intArray2, 4);
 			} 
 		}
-		try {
-			Thread.sleep((long) (50));
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		repaint();
 	}
 }

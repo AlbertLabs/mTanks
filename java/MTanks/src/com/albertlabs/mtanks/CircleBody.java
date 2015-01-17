@@ -4,7 +4,7 @@ public class CircleBody implements Body {
 
 	private double x, y, heading, radius;
 	
-	public CircleBody(double x, double y, double heading, double radius) {
+	public CircleBody(double x, double y, double radius, double heading) {
 		this.x = x;
 		this.y = y;
 		this.heading = heading;
