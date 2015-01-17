@@ -72,21 +72,21 @@ public class GameSim {
 					a.collide(b);
 				}
 			}
-			
+			/*
 			List <WorldObject> tempList = new ArrayList<WorldObject>();
 			for(WorldObject a: world.getList()){
 				if(a.alive()){
 					tempList.add(a);
 				}
 			}
-			world.getList().retainAll(tempList);
+			world.getList().retainAll(tempList);*/
 
 			List<PrintData> printData = new ArrayList<PrintData>();
 			for(WorldObject a: world.getList()){
 				printData.addAll(a.print());
 			}
-			System.out.println("TEST");
-			ref.setValue(printData);
+			//System.out.println("TEST");
+		//	ref.setValue(printData);
 			
 			try {
 				Thread.sleep(10);

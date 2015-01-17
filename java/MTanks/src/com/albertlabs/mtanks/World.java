@@ -89,7 +89,7 @@ class World extends JPanel {
 			if (a.getBody() instanceof CircleBody) {
 				CircleBody b = (CircleBody) a.getBody();
 				g.fillArc((int) b.getX() - (int) b.getRadius() / 2,
-						(int) a.getBody().getY() - (int) b.getRadius() / 2,
+						(int) b.getY() - (int) b.getRadius() / 2,
 						(int) b.getRadius() * 2, (int) b.getRadius() * 2, 0,
 						360);
 			} else {
@@ -101,7 +101,7 @@ class World extends JPanel {
 				for (int i = 0; i < intArray2.length; ++i)
 					intArray2[i] = (int) b.getYs()[i];
 				g.fillPolygon(intArray, intArray2, 4);
-			}
+			} 
 		}
 		try {
 			Thread.sleep((long) (50));
