@@ -51,6 +51,7 @@ public class Bullet implements WorldObject {
 	}
 
 	public void die() {
+		System.out.println("DIE");
 		GameSim.world.remove(this);
 		alive = false;
 	}

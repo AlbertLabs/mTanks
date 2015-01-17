@@ -93,7 +93,8 @@ public void move(double speed, int time) { //negative moves backwards positive m
 	}
 	
 	public void shoot(){
-		GameSim.world.add(new Bullet(body.getX()+Math.cos(turretAngle)*15, body.getY()+Math.sin(turretAngle)*15, 7, turretAngle));
+//		GameSim.world.add(new Bullet(body.getX()+Math.cos(turretAngle)*5, body.getY()+Math.sin(turretAngle)*5, 7, turretAngle, this));
+		GameSim.world.add(new Bullet(body.getX(), body.getY(), 7, turretAngle, this));
 	}
 	
 	public void turnTurret(double speed, int time) {
