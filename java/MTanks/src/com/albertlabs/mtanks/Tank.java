@@ -48,7 +48,7 @@ public class Tank implements WorldObject {
 
 	public void act() { //used for only tank, accessible to user
 		// TODO Auto-generated method stub
-		move(.0000000000001);
+		turn(Math.PI/4);
 	}
 
 	public void loop() { //used for all objects in world, not accessible to user
