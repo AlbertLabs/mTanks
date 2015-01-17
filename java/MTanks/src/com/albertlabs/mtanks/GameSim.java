@@ -8,9 +8,10 @@ public class GameSim {
 	
 	Firebase ref = new Firebase("https://mtanks.firebaseio.com/");
 	
+    
 	GameSim(){
 		world = new World(500, 500);
-
+        
 		BoxBody left = new BoxBody(7, 250, 15, 500, 0, "Border");
 		BoxBody right = new BoxBody(500, 250, 15, 500, 0,"Border");
 		BoxBody bottom = new BoxBody(250, 500, 507, 15, 0,"Border");
@@ -84,6 +85,9 @@ public class GameSim {
 	}
 	
 	public static void main(String[] args) {
+        
+        
+        
 		new GameSim();
 	}
 	
