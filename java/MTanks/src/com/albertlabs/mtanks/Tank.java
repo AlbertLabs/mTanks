@@ -44,12 +44,12 @@ public class Tank implements WorldObject {
 		return list;
 	}
 
-	public void run() {
+	public void act() { //used for only tank
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void act() {
+	public void loop() { //used for all objects in world
 		// TODO Auto-generated method stub
 		
 	}

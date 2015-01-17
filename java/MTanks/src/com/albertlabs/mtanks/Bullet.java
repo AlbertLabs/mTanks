@@ -25,7 +25,7 @@ public class Bullet implements WorldObject {
 		return list;
 	}
 
-	public void act() {
+	public void loop() {
 		body.setX(body.getX() + xspeed);
 		body.setY(body.getY() + yspeed);
 		distLeft -= Math.sqrt(xspeed * xspeed + yspeed * yspeed);

@@ -9,7 +9,7 @@ public interface WorldObject {
 	 
 	 void collide(WorldObject o);
 
-	void act();
+	void loop();
 	void die();
 	public boolean alive();
 }
