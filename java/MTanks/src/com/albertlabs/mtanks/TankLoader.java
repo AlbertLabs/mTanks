@@ -1,16 +1,18 @@
+package com.albertlabs.mtanks;
+
 class TankLoader{
     
-    TankLoader(..., string url){
+   /* TankLoader(..., string url){
         super(...)
             
             // Prepare source somehow.
             String source = "package test; public class Test { static { System.out.println(\"hello\"); } public Test() { System.out.println(\"world\"); } }";
 
-        load code
+        //load code
         
-        parse code
+        //parse code
             
-        compile code
+        //compile code
         
         // Save source in .java file.
         File root = new File("/java"); // On Windows running on C:\, this is C:\java.
@@ -32,5 +34,6 @@ class TankLoader{
     public Tank loadTank(){
 
     }
+    */
     
 }
