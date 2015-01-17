@@ -18,7 +18,7 @@ public class Box implements WorldObject {
 
 	public List<PrintData> print() {
 		List<PrintData> list = new ArrayList<PrintData>();
-		list.add(new PrintData("box", body.getX(), body.getY(), body.getWidth(), body.getHeight(), body.getHeading()));
+		list.add(new PrintData("box", body.getX(), body.getY(), body.getWidth(), body.getHeight(), body.getHeading(),0,0));
 		return list;
 	}
 

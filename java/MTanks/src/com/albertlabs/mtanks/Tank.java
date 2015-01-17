@@ -37,12 +37,12 @@ public class Tank implements WorldObject {
 
 		List<PrintData> list = new ArrayList<PrintData>();
 		list.add(new PrintData("tank", body.getX(), body.getY(), body.getWidth(),
-				body.getHeight(), body.getHeading(), new PrintData.HealthBar(
-						health, MAX_HEALTH)));
+				body.getHeight(), body.getHeading(), 
+						health, MAX_HEALTH));
 		list.add(new PrintData("turret", body.getX(), body.getY(), body.getWidth(),
-				body.getHeight(), body.getHeading()+turretAngle));
+				body.getHeight(), body.getHeading()+turretAngle, 0, 0));
 		list.add(new PrintData("sensor", body.getX(), body.getY(), body.getWidth(),
-				body.getHeight(), body.getHeading()+turretAngle+sensorAngle));
+				body.getHeight(), body.getHeading()+turretAngle+sensorAngle, 0, 0));
 		return list;
 	}
 
