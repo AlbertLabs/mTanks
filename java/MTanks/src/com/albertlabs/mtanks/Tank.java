@@ -16,6 +16,9 @@ public class Tank implements WorldObject {
 	
 	private double turretAngle = 0;
 	private double sensorAngle = 0;
+	
+	private static final double MAX_SPEED = 10; //TODO set to non-arbitrary value
+	private static final double MIN_SPEED = -10; //TODO set to non-arbitrary value
 
 	public BoxBody getBody(){
 		return body;
@@ -54,17 +57,19 @@ public class Tank implements WorldObject {
 	}
 
 	public void act() { //used for only tank, accessible to user
-		// TODO Auto-generated method stub
 
-		turn(Math.PI/4);
+		move(-1,10);
 
-		turretAngle+=0.1;
+		/* turretAngle+=0.1;
 		sensorAngle+=0.2;
 		body.setHeading(body.getHeading()+0.05);
 		body.setX(body.getX()+Math.cos(body.getHeading())*1);
 		body.setY(body.getY()+Math.sin(body.getHeading())*1);
 		health-=1;
 		if(health == 0) { health = 100; shoot(); }
+		*/
+		moveTime--;
+		
 	}
 
 	public void loop() { //used for all objects in world, not accessible to user
@@ -89,7 +94,7 @@ public class Tank implements WorldObject {
 
 	@Override
 	public void die() {
-		alive = false; //CHANING HOW DIE WORKS I THINK
+		alive = false; //TODO ? CHANGING HOW DIE WORKS I THINK
 	}
 
 	@Override
@@ -97,11 +102,11 @@ public class Tank implements WorldObject {
 		return alive;
 	}
 	
-	public void setSpeed(int speed) {
-		this.speed = speed;
+	public void setMoveSpeed(int speed) {
+		moveSpeed = speed;
 	}
-	public double getSpeed(){
-		return speed;
+	public double getMoveSpeed(){
+		return moveSpeed;
 	}
 
 	public void turn (double speed, int time) { //turnSpeed is in radians
@@ -118,8 +123,16 @@ public class Tank implements WorldObject {
 		if(speed > MAX_SPEED) moveSpeed = MAX_SPEED;
 		else if(speed < MIN_SPEED) moveSpeed = MIN_SPEED;
 		else moveSpeed = speed;
-		if(time > 0)
-				moveTime = time;
+		if(time > 0) {
+			time--;
+			moveTime = time;
+		}
+		else
+			stop();
+		
+	}
+	public void stop() {
+		moveSpeed = 0;
 	}
 	
 
