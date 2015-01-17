@@ -131,6 +131,20 @@ public void move(double speed, int time) { //negative moves backwards positive m
 		health -= 10;
 		}
 	}
+	/**
+	 * TODO this will get the distance to an object
+	 * @return distance
+	 */
+	public double getDistanceToObject() {
+		//this will get the distance to an object
+		return 1;
+	}
+	/**
+	 * TODO This should return the color of the space directly in front of the tank
+	 */
+	public String scanColor() {
+		return "why this";
+	}
 
 	@Override
 	public void die() {
