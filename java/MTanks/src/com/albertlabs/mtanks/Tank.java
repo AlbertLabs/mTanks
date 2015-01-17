@@ -55,6 +55,9 @@ public class Tank implements WorldObject {
 
 	public void act() { //used for only tank, accessible to user
 		// TODO Auto-generated method stub
+
+		turn(Math.PI/4);
+
 		turretAngle+=0.1;
 		sensorAngle+=0.2;
 		body.setHeading(body.getHeading()+0.05);
