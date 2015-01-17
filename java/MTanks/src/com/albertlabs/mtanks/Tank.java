@@ -14,8 +14,12 @@ public class Tank implements WorldObject {
 	private double turnSpeed;
 	private double turnTime;
 	
-	private double turretAngle = 0;
-	private double sensorAngle = 0;
+	private double turretAngle;
+	private double turretSpeed;
+	private double turretTime;
+	private double radarAngle;
+	private double radarSpeed;
+	private double radarTime;
 	
 	private static final double MAX_SPEED = 10; //TODO set to non-arbitrary value
 	private static final double MIN_SPEED = -10; //TODO set to non-arbitrary value
@@ -25,7 +29,8 @@ public class Tank implements WorldObject {
 	}
 
 	public void begin(){ //accessible to user
-		
+		move(-5,10);
+		turn(Math.PI/6, 4);
 	}
 	
 	public void shoot(){
@@ -41,6 +46,9 @@ public class Tank implements WorldObject {
 
 	Tank(double x, double y, double width, double height, double heading) {
 		body = new BoxBody(x, y, width, height, heading);
+		turretAngle = body.getHeading();
+		radarAngle = body.getHeading();
+		
 	}
 
 	public List<PrintData> print() {
@@ -51,14 +59,12 @@ public class Tank implements WorldObject {
 						health, MAX_HEALTH));
 		list.add(new PrintData("turret", body.getX(), body.getY(), body.getWidth(),
 				body.getHeight(), body.getHeading()+turretAngle, 0, 0));
-		list.add(new PrintData("sensor", body.getX(), body.getY(), body.getWidth(),
-				body.getHeight(), body.getHeading()+turretAngle+sensorAngle, 0, 0));
+		list.add(new PrintData("sensor", body.getX(), body.getY(), body.getWidth()/2,
+				body.getHeight()/2, body.getHeading()+turretAngle+radarAngle, 0, 0));
 		return list;
 	}
 
 	public void act() { //used for only tank, accessible to user
-
-		move(-1,10);
 
 		/* turretAngle+=0.1;
 		sensorAngle+=0.2;
@@ -68,8 +74,7 @@ public class Tank implements WorldObject {
 		health-=1;
 		if(health == 0) { health = 100; shoot(); }
 		*/
-		moveTime--;
-		
+
 	}
 
 	public void loop() { //used for all objects in world, not accessible to user
@@ -81,6 +86,14 @@ public class Tank implements WorldObject {
 		if(turnTime > 0){
 			turnTime--;
 			body.setHeading(body.getHeading()+turnSpeed);
+		}
+		if (turretTime > 0) {
+			turretTime--;
+			turretAngle += turretSpeed;
+		if (radarTime > 0) {
+			radarTime--;
+			radarAngle += radarSpeed;
+		}
 		}
 		
 	}
@@ -124,15 +137,28 @@ public class Tank implements WorldObject {
 		else if(speed < MIN_SPEED) moveSpeed = MIN_SPEED;
 		else moveSpeed = speed;
 		if(time > 0) {
-			time--;
 			moveTime = time;
 		}
-		else
-			stop();
 		
 	}
 	public void stop() {
 		moveSpeed = 0;
+	}
+	
+	public void turnTurret(double speed, int time) {
+		if(speed > MAX_SPEED) turretSpeed = MAX_SPEED;
+		else if(speed < MIN_SPEED) turretSpeed = MIN_SPEED;
+		else turretSpeed = speed;
+		if(time > 0)
+				turretTime = time;
+	}
+	
+	public void turnRadar(double speed, int time) {
+		if(speed > MAX_SPEED) radarSpeed = MAX_SPEED;
+		else if(speed < MIN_SPEED) radarSpeed = MIN_SPEED;
+		else radarSpeed = speed;
+		if(time > 0)
+				radarTime = time;
 	}
 	
 
