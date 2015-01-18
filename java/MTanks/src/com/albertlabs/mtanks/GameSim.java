@@ -46,11 +46,11 @@ static int lastSize = 0;
 		//world.add(TankLoader.loadTank("packaNewTankge com.albertlabs.mtanks;public class NewTank extends Tank {	NewTank() {	super(100, 200, 50, 50, 0);}public void begin(){	}public void act(){	}}"));
 		
 		
-		world.add(new Tank(100, 100, 50, 50, 0));
-	//	world.add(new Tank(400, 100, 50, 50, 0));
-	//	world.add(new Tank(100, 400, 50, 50, 0));
-	//	world.add(new Tank(400, 400, 50, 50, 0));
-	//	
+		world.add(new Tank(100, 100, 35, 35, Math.random()*Math.PI*2));
+		world.add(new Tank(400, 100, 35, 35, Math.random()*Math.PI*2));
+		world.add(new Tank(100, 400, 35, 35, Math.random()*Math.PI*2));
+		world.add(new Tank(400, 400, 35, 35, Math.random()*Math.PI*2));
+		
 		Box left = new Box(7, 250, 15, 500, 0);
 		Box right = new Box(500, 250, 15, 500, 0);
 		Box bottom = new Box(250, 500, 507, 15, 0);
@@ -67,9 +67,11 @@ static int lastSize = 0;
 		}
 		
 		while (true) {
+			int tanks = 0;
 			for(WorldObject a : (ArrayList<WorldObject>)world.getList().clone()){ //only Tanks run
 				if(a instanceof Tank)
 				((Tank)a).act(); //public side
+				tanks++;
 			}
 			
 			for(WorldObject a : (ArrayList<WorldObject>)world.getList().clone()){ //everybody acts
@@ -108,6 +110,7 @@ static int lastSize = 0;
 			}
 			int temp = printData.size();
 			//System.out.println("TEST");
+			
 			for(int i = 0; i < printData.size(); i++){
 				
 				/*
@@ -121,18 +124,22 @@ static int lastSize = 0;
 		this.image = image;
 				 */
 				world.repaint();
-				ref.child(Integer.toString(i)).child("y").setValue(printData.get(i).y);
-				ref.child(Integer.toString(i)).child("x").setValue(printData.get(i).x);
-				ref.child(Integer.toString(i)).child("width").setValue(printData.get(i).width);
-				ref.child(Integer.toString(i)).child("height").setValue(printData.get(i).height);
-				ref.child(Integer.toString(i)).child("angle").setValue(printData.get(i).angle);
-				ref.child(Integer.toString(i)).child("health").setValue(printData.get(i).health);
-				ref.child(Integer.toString(i)).child("maxHealth").setValue(printData.get(i).maxHealth);
-				ref.child(Integer.toString(i)).child("image").setValue(printData.get(i).image);
+				ref.child("objects").child(Integer.toString(i)).child("y").setValue(printData.get(i).y);
+				ref.child("objects").child(Integer.toString(i)).child("x").setValue(printData.get(i).x);
+				ref.child("objects").child(Integer.toString(i)).child("width").setValue(printData.get(i).width);
+				ref.child("objects").child(Integer.toString(i)).child("height").setValue(printData.get(i).height);
+				ref.child("objects").child(Integer.toString(i)).child("angle").setValue(printData.get(i).angle);
+				ref.child("objects").child(Integer.toString(i)).child("health").setValue(printData.get(i).health);
+				ref.child("objects").child(Integer.toString(i)).child("maxHealth").setValue(printData.get(i).maxHealth);
+				ref.child("objects").child(Integer.toString(i)).child("image").setValue(printData.get(i).image);
 				
 			}
 			for(int i = printData.size(); i <= lastSize; i++)
 				ref.child(Integer.toString(i)).removeValue();
+			if(tanks ==1)
+				ref.child("state").setValue("game over");
+			else
+				ref.child("state").setValue("running");
 			//ref.setValue(printData);
 			lastSize = temp;
 			try {

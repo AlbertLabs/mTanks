@@ -13,7 +13,7 @@ public class NewTank extends Tank {
 	}
 	
 	public void act(){
-		
+//		move(Tank.MA)
 	}
 
 }

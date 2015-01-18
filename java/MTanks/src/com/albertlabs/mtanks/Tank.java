@@ -22,30 +22,49 @@ public class Tank implements WorldObject {
 	private double radarSpeed;
 	private double radarTime;
 	
-	private static final double MAX_SPEED = 10; //TODO set to non-arbitrary value
-	private static final double MIN_SPEED = -10; //TODO set to non-arbitrary value
+	private static final double MAX_SPEED = 3; //TODO set to non-arbitrary value
+	private static final double MIN_SPEED = -3; //TODO set to non-arbitrary value
 
 	public final static double MAX_HEALTH = 100;
 	private double health =  MAX_HEALTH;
 
 	Tank(double x, double y, double width, double height, double heading) {
 		body = new BoxBody(x, y, width, height, heading);
-		turretAngle = body.getHeading();
-		radarAngle = body.getHeading();
+		turretAngle = 0;
+		radarAngle = 0;
 	}
 	
 	public void begin(){ //accessible to user
+		
 	//	shoot();
 	//	move(-5,500);
 	//	turn(Math.PI/6, 4);
 	}
-	
+	int counter = 50;
 	public void act() { //used for only tank, accessible to user
-		shoot();
-		move(5,1);
-		System.out.println(getTargetColor());
-		//turn(0.01,1);
-		System.out.println(getDistanceToObject());
+	
+	//	turnTurret(0.1, 1);
+	//	turnRadar(-0.1, 1);
+
+		if(getTargetColor().equals(Color.RED)){
+			shoot();
+		}
+		
+	/*	counter--;
+		if(counter == 0){
+			System.out.println("SHOOT");
+			counter = 50;
+			shoot();
+		}*/
+		
+		if(getDistanceToObject() > 300)
+			move(MAX_SPEED,1);
+		else{
+			turn(0.3, 1);
+
+			move(-MAX_SPEED,1);
+		}
+		
 		/* turretAngle+=0.1;
 		sensorAngle+=0.2;
 		body.setHeading(body.getHeading()+0.05);
@@ -55,6 +74,14 @@ public class Tank implements WorldObject {
 		if(health == 0) { health = 100; shoot(); }
 		*/
 
+	}
+	
+	private void hit() {
+		move(-MAX_SPEED,1);
+	}
+	
+	public void bulletHit(){
+		
 	}
 	
 	public void takeDamage(double a) {
@@ -106,7 +133,7 @@ public void move(double speed, int time) { //negative moves backwards positive m
 	
 	public void shoot(){
 //		GameSim.world.add(new Bullet(body.getX()+Math.cos(turretAngle)*5, body.getY()+Math.sin(turretAngle)*5, 7, turretAngle, this));
-		GameSim.objectCreate(new Bullet(body.getX(), body.getY(), 7, turretAngle, this));
+		GameSim.objectCreate(new Bullet(this.body.getX(), this.body.getY(), 7, turretAngle+this.body.getHeading(), this));
 	}
 	
 	public void turnTurret(double speed, int time) {
@@ -128,19 +155,23 @@ public void move(double speed, int time) { //negative moves backwards positive m
 	@Override
 	public void collide(WorldObject obj) { //TODO collide stuff
 		if(obj instanceof Bullet){
-			if(!((Bullet)obj).parent.equals(this))
-			health -= 20;
+			if(!((Bullet)obj).parent.equals(this)){
+				this.takeDamage(20);
+				bulletHit();
+			}
 			
 		}else{
 		if(this.body.checkCollision(obj.getBody())){
 			body.setX(body.getX()+Math.cos(body.getHeading())*-moveSpeed);
 			body.setY(body.getY()+Math.sin(body.getHeading())*-moveSpeed);
+			hit();
 		}
 		moveSpeed = 0;
 		moveTime = 0;
-		this.takeDamage(10);
+	//	this.takeDamage(10);
 		}
 	}
+
 	/**
 	 * TODO this will get the distance to an object
 	 * @return distance

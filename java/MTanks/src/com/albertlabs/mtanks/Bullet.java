@@ -17,8 +17,8 @@ public class Bullet implements WorldObject {
 
 	Bullet(double x, double y, double radius, double heading, Tank parent) {
 		body = new CircleBody(x, y, radius, heading);
-		xspeed = Math.acos(heading)*5;
-		yspeed = Math.asin(heading)*5;
+		xspeed = Math.cos(heading)*5;
+		yspeed = Math.sin(heading)*5;
 		this.parent = parent;
 	}
 
