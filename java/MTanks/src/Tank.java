@@ -1,10 +1,8 @@
-package com.albertlabs.mtanks;
+
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.albertlabs.mtanks.World.BodyEdgePoint;
 
 
 public class Tank implements WorldObject {
@@ -183,7 +181,7 @@ public void move(double speed, int time) { //negative moves backwards positive m
 	}
 	
 	public Color getTargetColor() {
-		BodyEdgePoint a = GameSim.world.firstInLine(this, radarAngle+turretAngle+this.getBody().getHeading());
+		World.BodyEdgePoint a = GameSim.world.firstInLine(this, radarAngle+turretAngle+this.getBody().getHeading());
 		if (a.dist < 150){
 			return a.wo.getColor();
 		}

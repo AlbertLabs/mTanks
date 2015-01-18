@@ -1,4 +1,4 @@
-package com.albertlabs.mtanks;
+
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.albertlabs.mtanks;
+
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,7 +27,7 @@ class World extends JPanel {
 			entity.add(o);
 	}
 	
-	static class BodyEdgePoint{
+	public static class BodyEdgePoint{
 		public double x,y;
 		public double xStart,yStart;
 		public double dist;

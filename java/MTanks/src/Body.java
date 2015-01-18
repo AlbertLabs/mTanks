@@ -1,4 +1,4 @@
-package com.albertlabs.mtanks;
+
 
 public interface Body {
 	public double getX();

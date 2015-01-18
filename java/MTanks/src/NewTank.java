@@ -1,4 +1,4 @@
-package com.albertlabs.mtanks;
+
 
 public class NewTank extends Tank {
 
