@@ -1,7 +1,10 @@
 package com.albertlabs.mtanks;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.albertlabs.mtanks.World.BodyEdgePoint;
 
 
 public class Tank implements WorldObject {
@@ -32,13 +35,17 @@ public class Tank implements WorldObject {
 	}
 	
 	public void begin(){ //accessible to user
-		shoot();
+	//	shoot();
 	//	move(-5,500);
 	//	turn(Math.PI/6, 4);
 	}
 	
 	public void act() { //used for only tank, accessible to user
-
+		shoot();
+		move(5,1);
+		System.out.println(getTargetColor());
+		//turn(0.01,1);
+		System.out.println(getDistanceToObject());
 		/* turretAngle+=0.1;
 		sensorAngle+=0.2;
 		body.setHeading(body.getHeading()+0.05);
@@ -50,7 +57,11 @@ public class Tank implements WorldObject {
 
 	}
 	
-	
+	public void takeDamage(double a) {
+		this.health -= a;
+		if (health <= 0)
+			die();
+	}
 	
 	public void loop() { //used for all objects in world, not accessible to user
 		if(moveTime > 0){
@@ -127,8 +138,7 @@ public void move(double speed, int time) { //negative moves backwards positive m
 		}
 		moveSpeed = 0;
 		moveTime = 0;
-		
-		health -= 10;
+		this.takeDamage(10);
 		}
 	}
 	/**
@@ -136,8 +146,15 @@ public void move(double speed, int time) { //negative moves backwards positive m
 	 * @return distance
 	 */
 	public double getDistanceToObject() {
-		//this will get the distance to an object
-		return 1;
+		return GameSim.world.firstInLine(this, radarAngle+turretAngle+this.getBody().getHeading()).dist;
+	}
+	
+	public Color getTargetColor() {
+		BodyEdgePoint a = GameSim.world.firstInLine(this, radarAngle+turretAngle+this.getBody().getHeading());
+		if (a.dist < 150){
+			return a.wo.getColor();
+		}
+		return Color.WHITE;
 	}
 	/**
 	 * TODO This should return the color of the space directly in front of the tank
@@ -178,6 +195,11 @@ public void move(double speed, int time) { //negative moves backwards positive m
 		list.add(new PrintData("sensor", body.getX(), body.getY(), body.getWidth()/2,
 				body.getHeight()/2, body.getHeading()+turretAngle+radarAngle+Math.PI/2, 0, 0));
 		return list;
+	}
+
+	@Override
+	public Color getColor() {
+		return Color.RED;
 	}
 	
 }

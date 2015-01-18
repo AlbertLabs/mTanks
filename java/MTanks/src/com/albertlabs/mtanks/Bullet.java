@@ -1,5 +1,6 @@
 package com.albertlabs.mtanks;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,6 @@ public class Bullet implements WorldObject {
 		xspeed = Math.acos(heading)*5;
 		yspeed = Math.asin(heading)*5;
 		this.parent = parent;
-		System.out.println(radius);
 	}
 
 	public List<PrintData> print() {
@@ -54,6 +54,11 @@ public class Bullet implements WorldObject {
 
 	public void die() {
 		GameSim.objectDeath(this);
+	}
+
+	@Override
+	public Color getColor() {
+		return Color.GRAY;
 	}
 
 }

@@ -21,4 +21,5 @@ public interface Body {
 
 	public boolean checkCollision(Body b);
 	
+	public double distance(Body b);
 }

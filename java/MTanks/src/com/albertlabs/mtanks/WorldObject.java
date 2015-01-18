@@ -1,5 +1,6 @@
 package com.albertlabs.mtanks;
 
+import java.awt.Color;
 import java.util.List;
 
 public interface WorldObject {
@@ -11,4 +12,6 @@ public interface WorldObject {
 
 	void loop();
 	void die();
+	
+	Color getColor();
 }

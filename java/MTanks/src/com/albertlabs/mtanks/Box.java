@@ -1,5 +1,6 @@
 package com.albertlabs.mtanks;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,11 @@ public class Box implements WorldObject {
 
 	public boolean alive() {
 		return alive;
+	}
+
+	@Override
+	public Color getColor() {
+		return Color.BLACK;
 	}
 
 }

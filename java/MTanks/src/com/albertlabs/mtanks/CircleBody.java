@@ -65,4 +65,10 @@ public class CircleBody implements Body {
 		return checkCollision((BoxBody) o);
 	}
 
+	@Override
+	public double distance(Body o) {
+		return Math.sqrt((o.getX() - this.x) * (o.getX() - this.x) + (o.getY() - this.y)
+				* (o.getY() - this.y));
+	}
+
 }

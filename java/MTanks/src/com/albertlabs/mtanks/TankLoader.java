@@ -121,7 +121,7 @@ class TankLoader{
 
             // Load in the class; Class.childclass should be located in
             // the directory file:/class/demo/
-            Class thisClass = loader.loadClass("math.Calculator");
+            Class thisClass = loader.loadClass("com.albertlabs.mtanks.NewTank");
 
             Object instance = thisClass.newInstance();
             return (Tank) instance;

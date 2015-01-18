@@ -43,13 +43,14 @@ static int lastSize = 0;
 			world.add(TankLoader.loadTank(tankURLs.get(i)));
 		}*/
 		
+		//world.add(TankLoader.loadTank("packaNewTankge com.albertlabs.mtanks;public class NewTank extends Tank {	NewTank() {	super(100, 200, 50, 50, 0);}public void begin(){	}public void act(){	}}"));
 		
 		
 		world.add(new Tank(100, 100, 50, 50, 0));
-		world.add(new Tank(400, 100, 50, 50, 0));
-		world.add(new Tank(100, 400, 50, 50, 0));
-		world.add(new Tank(400, 400, 50, 50, 0));
-		
+	//	world.add(new Tank(400, 100, 50, 50, 0));
+	//	world.add(new Tank(100, 400, 50, 50, 0));
+	//	world.add(new Tank(400, 400, 50, 50, 0));
+	//	
 		Box left = new Box(7, 250, 15, 500, 0);
 		Box right = new Box(500, 250, 15, 500, 0);
 		Box bottom = new Box(250, 500, 507, 15, 0);
@@ -82,8 +83,6 @@ static int lastSize = 0;
 				for (WorldObject b : col){
 					//System.out.println("coll" + a + "   " + b);
 					if (!a.equals(b)) {
-						if (a instanceof Tank)
-							System.out.println(a + " hit " + b);
 						a.collide(b);}
 				}
 			}
@@ -137,7 +136,7 @@ static int lastSize = 0;
 			//ref.setValue(printData);
 			lastSize = temp;
 			try {
-				Thread.sleep(100);
+				Thread.sleep(150);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

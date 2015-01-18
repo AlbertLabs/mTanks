@@ -26,6 +26,46 @@ class World extends JPanel {
 		if (!entity.contains(o))
 			entity.add(o);
 	}
+	
+	static class BodyEdgePoint{
+		public double x,y;
+		public double xStart,yStart;
+		public double dist;
+		public WorldObject wo;
+		BodyEdgePoint(WorldObject wo, double xStart, double yStart, double x,double y){ 
+			this.x = x; this.y = y; this.wo = wo;
+			this.xStart = xStart;
+			this.yStart = yStart;
+			this.dist = Math.sqrt( (x*x-xStart*xStart) + (y*y-yStart*yStart)  )	;
+			}
+	}
+	public BodyEdgePoint firstInLine(WorldObject o, double angle){
+		double x = o.getBody().getX();
+		double y = o.getBody().getY();
+		
+		double xStart;
+		double yStart;
+		
+	//	if(objectAtPoint(x,y) != null )
+		while(objectAtPoint(x,y) == (o) ){
+			x += Math.cos(angle);
+			y += Math.sin(angle);
+		}
+		xStart = x;
+		yStart = y;
+		
+		while(objectAtPoint(x,y) == null){
+			x += Math.cos(angle);
+			y += Math.sin(angle);
+		}
+		return new BodyEdgePoint(objectAtPoint(x,y), xStart, yStart, x,y);
+	}
+
+	private WorldObject objectAtPoint(double x, double y) {
+		for(WorldObject a : entity)
+			if(a.getBody().containsPoint(x, y)) return a;
+		return null;
+	}
 
 	public void remove(WorldObject o) {
 			entity.remove(o);
