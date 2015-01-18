@@ -60,7 +60,7 @@ public class Tank implements WorldObject {
 		if(getDistanceToObject() > 300)
 			move(MAX_SPEED,1);
 		else{
-			turn(0.3, 1);
+			turn(-0.5, 1);
 
 			move(-MAX_SPEED,1);
 		}
@@ -162,8 +162,10 @@ public void move(double speed, int time) { //negative moves backwards positive m
 			
 		}else{
 		if(this.body.checkCollision(obj.getBody())){
-			body.setX(body.getX()+Math.cos(body.getHeading())*-moveSpeed);
-			body.setY(body.getY()+Math.sin(body.getHeading())*-moveSpeed);
+			int dir = 1;
+			if(moveSpeed < 0); dir = -1;
+			body.setX(body.getX()+Math.cos(body.getHeading())*-dir);
+			body.setY(body.getY()+Math.sin(body.getHeading())*-dir);
 			hit();
 		}
 		moveSpeed = 0;
